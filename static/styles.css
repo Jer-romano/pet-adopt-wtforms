@@ -1,0 +1,47 @@
+body {
+    background-color: rgba(98, 185, 98, 0.475);
+}
+h1 {
+    text-align: center;
+}
+
+img {
+    max-width: 500px;
+    max-height: 400px;
+}
+
+.card-img-top {
+    max-width: 300px;
+    max-height: 200px;
+}
+
+.btn-success {
+    margin: 10px;
+}
+
+.form-label {
+    margin-top: 10px;
+}
+
+#pet-list {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#edit-form {
+    max-width: 500px;
+}
+
+/* #pet-info-title {
+    display: flex;
+    justify-content:
+} */
+
+.card-text {
+    margin: 8px;
+    text-align: center;
+}
+.pet-entry {
+    margin: 10px;
+    border: 2px solid darkgreen;
+}

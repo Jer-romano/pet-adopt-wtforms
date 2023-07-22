@@ -1,0 +1,44 @@
+{% extends 'base.html'%}
+{%block title%} 
+    <h1>{{ pet.name }}</h1>
+{%endblock%}
+{%block content%}
+<div class="container">
+    <div>
+        <img src="{{pet.photo_url}}" alt="A picture of {{pet.name}}">
+        <h3>{{ pet.species }}</h3>
+        {%if pet.available %}
+            <h4>Currently available for adoption!</h4>
+        {%else%}
+            <h4>Currently has a home.</h4>
+        {%endif%}
+        <h4>Age: {{ pet.age }} years</h4>
+        <a href="/" class="btn btn-primary">Back</a>
+    </div>
+    <hr>
+    <div>
+        <h2>Edit info for {{ pet.name }}</h2>
+        <form action="/{{pet.id}}" id="edit-form" method="POST">
+            {{ form.hidden_tag() }}
+            {% for field in form 
+                if field.widget.input_type != 'hidden' %}
+                {%if field.label.text == 'Available' %}
+                    <div class="form-check">
+                        {{ field(class_ = "form-check-input") }}
+                        {{ field.label(class_ = "form-check-label") }}
+                    </div>
+                {% else %}
+                    <div class="form-group">
+                        {{ field.label(class_= "form-label") }}
+                        {{ field(class_= "form-control")  }}
+                    </div>
+                {%endif%}
+                {% for error in field.errors %}
+                    {{ error }}
+                {%endfor%}
+            {%endfor%}
+                <button type="submit" class="btn btn-success">Save</button>
+        </form>
+    </div>
+</div>
+{%endblock%}
