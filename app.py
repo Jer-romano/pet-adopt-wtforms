@@ -18,20 +18,18 @@ db.create_all()
 
 @app.route("/")
 def show_homepage():
+    '''Shows the homepage, where every pet in the DB is listed.''' 
     pets = Pet.query.all()
     return render_template("base.html", pets=pets)
 
 @app.route("/add", methods=["GET", "POST"])
 def add_pet():
+    '''Handles both rendering the add_pet form and processing
+    the data upon submit. Adds a new pet to the DB'''
     form = AddPetForm()
     if form.validate_on_submit():
-        name = form.name.data
-        species = form.species.data
-        photo = form.photo_url.data
-        age = form.age.data
-        notes = form.notes.data
-        new_pet = Pet(name=name, species=species, photo_url=photo,
-        age=age, notes=notes)
+        #Using **form.data to unpack the form data as keyword args 
+        new_pet = Pet(**form.data)
         db.session.add(new_pet)
         db.session.commit()
         return redirect("/")
@@ -40,8 +38,11 @@ def add_pet():
 
 @app.route("/<int:pet_id>", methods=["GET", "POST"])
 def edit_pet_info(pet_id):
+    '''Does one of 2 things: 1: Shows the pet info page for a specific pet.
+                       2: Handles the processing of the edit_info form
+                       on said page'''
     pet = Pet.query.get_or_404(pet_id)
-    form = EditPetForm(obj=pet)
+    form = EditPetForm(obj=pet) #Form is prefilled with pet's data, if present
     if form.validate_on_submit():
         pet.photo_url = form.photo_url.data
         pet.notes = form.notes.data
